@@ -25,6 +25,17 @@ void swap(double **p,int *tx, int *ty,int *m,int *n) {
     }
     
 }
+void operation(double** p, int* tx, int* ty, int* m, int* n) {
+    int tmpy = *ty;
+    for (int i = *tx; i < *n; i++) {
+        if (p[tmpy][i] != 1) {
+            p[tmpy][i] / p[tmpy][i];
+        }
+        else {
+            break;
+        }
+    }
+}
 
 int main()
 {
@@ -53,6 +64,7 @@ int main()
         if (matrix[y][x] == 0 && x < n && y < m) { //找出非零整數
             swap(*&matrix, &x, &y, &m, &n);
         }
+        operation(*&matrix, &x, &y, &m, &n);
         break;
     }
 
