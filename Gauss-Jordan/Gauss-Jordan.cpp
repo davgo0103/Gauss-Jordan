@@ -26,16 +26,43 @@ void swap(double **p,int *tx, int *ty,int *m,int *n) {
     
 }
 void operation(double** p, int* tx, int* ty, int* m, int* n) {
-    int tmpy = *ty;
-    for (int i = *tx; i < *n; i++) {
-        if (p[tmpy][i] != 1) {
-            p[tmpy][i] / p[tmpy][i];
+    int tmpy = *ty; 
+    double leader = p[tmpy][*tx];
+    if (leader != 0) { 
+        for (int i = *tx; i < *n; i++) { //取得前導1
+            if (leader != 1) {
+                p[tmpy][i] = p[tmpy][i] / leader;
+            }
+            else {
+                break;
+            }
         }
-        else {
-            break;
+        up(p, tx, ty, m, n);
+        down(p, tx, ty, m, n);
+    }
+    
+    *ty = *ty + 1;
+}
+
+
+void up(double** p, int* tx, int* ty, int* m, int* n) {
+    int tmpx = *tx, tmpy = *ty;
+    
+}
+
+void down(double** p, int* tx, int* ty, int* m, int* n) {
+    int tmpx = *tx, tmpy = *ty;
+}
+
+void print(double** p, int m, int n) {
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << p[i][j] << " ";
         }
+        cout << endl;
     }
 }
+
 
 int main()
 {
@@ -65,17 +92,14 @@ int main()
             swap(*&matrix, &x, &y, &m, &n);
         }
         operation(*&matrix, &x, &y, &m, &n);
-        break;
-    }
 
+        
 
-
-
-    for (int i = 0; i < m; i++) {
-        for(int j = 0; j < n; j++) {
-            cout << matrix[i][j] << " ";
+            if (x + 1 > n || y + 1 > m) {
+            break;
         }
-        cout << endl;
     }
+
+    print(*&matrix, m, n);
     cout << x << " " << y;
 }
