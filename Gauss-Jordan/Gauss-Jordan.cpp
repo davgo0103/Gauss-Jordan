@@ -1,5 +1,8 @@
 ﻿#include <iostream>
 #include <iomanip>
+#include <fstream>
+#include <string>
+
 using namespace std;
 void swap(double** p, int* tx, int* ty, int* m, int* n) {
     double tmp;
@@ -69,24 +72,60 @@ void print(double** p, int m, int n) {
         cout << endl;
     }
 }
+void openfile(int* m, int* n) {
+    ifstream ifs;
+    string buffer;
+    string space_delimiter = " ";
+    size_t pos = 0;
+    ifs.open("D:\input.txt");
+    if (!ifs.is_open()) {
+        cout << "Failed to open file.\n";
+    }
+    else {
+        while (getline(ifs, buffer)) {
+            *m = *m + 1;
+        }
+        while ((pos = buffer.find(space_delimiter)) != string::npos) { //計算n
+            buffer.erase(0, pos + space_delimiter.length());
+            *n = *n + 1;
+        }
+        
+        ifs.close();
+    }
+}
+
 int main()
 {
-    int m, n, x = 0, y = 0;
-    double** matrix;
-    cout << "Please enter the matrix size(m*n):\nm=";
-    cin >> m;
-    cout << "n=";
-    cin >> n;
-    matrix = (double**)malloc(m * sizeof(double*));
-    cout << "Please enter a matrix:" << endl;
-    for (int i = 0; i < m; i++)
-    {
-        matrix[i] = (double*)malloc(n * sizeof(double));
-        for (int j = 0; j < n; j++)
-        {
-            cin >> matrix[i][j];
-        }
+    ifstream ifs;
+    string buffer;
+    string space_delimiter = " ";
+    size_t pos = 0;
+    int m=0, n=1, x = 0, y = 0;
+    double** matrix = NULL;
+
+    openfile(&m, &n);
+    
+    ifs.open("D:\input.txt");
+    if (!ifs.is_open()) {
+        cout << "Failed to open file.\n";
     }
+    else {
+        matrix = (double**)malloc(m * sizeof(double*));
+        int i = 0;
+        while (getline(ifs, buffer)) {
+            matrix[i] = (double*)malloc(n * sizeof(double));
+            int j = 0;
+            while ((pos = buffer.find(space_delimiter)) != string::npos) { //計算n
+                matrix[i][j] = stof(buffer.substr(0, pos));
+                buffer.erase(0, pos + space_delimiter.length());
+                j++;
+            }
+            i++;
+        }
+        ifs.close();
+    }
+
+    
     while (true)
     {
         if (matrix[y][x] == 0 && x < n && y < m) { //找出非零整數
