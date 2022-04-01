@@ -120,6 +120,7 @@ int main()
                 buffer.erase(0, pos + space_delimiter.length());
                 j++;
             }
+            matrix[i][j] = stof(buffer.substr(0, pos));
             i++;
         }
         ifs.close();
